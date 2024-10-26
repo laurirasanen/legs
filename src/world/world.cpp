@@ -66,6 +66,7 @@ void World::Render()
 void World::AddEntity(std::shared_ptr<Entity> entity)
 {
     m_entities.push_back(entity);
+    entity->OnSpawn();
 }
 
 void World::RemoveEntity(std::shared_ptr<Entity> entity)
