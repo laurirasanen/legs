@@ -12,6 +12,8 @@ struct STransform
 {
     glm::vec3 position;
     SRotation rotation;
+    glm::vec3 velocity;
+    glm::vec3 angularVelocity;
 
     glm::mat4x4 GetModelMatrix()
     {

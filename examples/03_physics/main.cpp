@@ -20,8 +20,8 @@ class MySystem : public ISystem
         int width;
         int height;
         g_engine->GetWindow()->GetFramebufferSize(&width, &height);
-        m_camera                      = std::make_shared<NoclipCamera>(width, height);
-        m_camera->Transform->position = {0.0f, -10.0f, 5.0f};
+        m_camera = std::make_shared<NoclipCamera>(width, height);
+        m_camera->SetPosition({0.0f, -10.0f, 5.0f});
         g_engine->SetCamera(m_camera);
 
         auto renderer = g_engine->GetRenderer();
@@ -77,7 +77,7 @@ class MySystem : public ISystem
     }
 
   private:
-    std::shared_ptr<NoclipCamera>            m_camera;
+    std::shared_ptr<NoclipCamera> m_camera;
 };
 
 int main(int argc, char** argv)

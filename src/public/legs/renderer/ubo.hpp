@@ -41,7 +41,7 @@ struct UniformBufferObject
         invView     = glm::inverse(view);
         invProj     = glm::inverse(proj);
         clipToWorld = glm::inverse(proj * view);
-        eye         = cam->Transform->position;
+        eye         = cam->GetPosition();
 
         viewport = cam->viewport;
     }

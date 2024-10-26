@@ -40,8 +40,13 @@ class Physics final : public IPhysics
     void        RemoveBody(JPH::BodyID id) override;
     void        DestroyBody(JPH::BodyID id) override;
 
-    STransform GetBodyTransform(JPH::BodyID id) override;
-    void       SetBodyTransform(JPH::BodyID id, STransform trans) override;
+    void GetBodyTransform(JPH::BodyID id, std::shared_ptr<STransform> trans) override;
+    void SetBodyTransform(JPH::BodyID id, std::shared_ptr<STransform> trans) override;
+
+    void SetBodyPosition(JPH::BodyID id, glm::vec3 pos) override;
+    void SetBodyRotation(JPH::BodyID id, glm::quat rot) override;
+    void SetBodyVelocity(JPH::BodyID id, glm::vec3 vel) override;
+    void SetBodyAngularVelocity(JPH::BodyID id, glm::vec3 vel) override;
 
   private:
     JPH::PhysicsSystem     m_physicsSystem;

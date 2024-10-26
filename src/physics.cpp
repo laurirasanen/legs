@@ -351,37 +351,58 @@ void Physics::DestroyBody(JPH::BodyID id)
     m_physicsSystem.GetBodyInterface().DestroyBody(id);
 }
 
-STransform Physics::GetBodyTransform(JPH::BodyID id)
+void Physics::GetBodyTransform(JPH::BodyID id, std::shared_ptr<STransform> trans)
 {
-    STransform trans;
     JPH::RVec3 joltPos;
     JPH::Quat  joltRot;
 
     m_physicsSystem.GetBodyInterface().GetPositionAndRotation(id, joltPos, joltRot);
 
-    trans.position.x = joltPos.GetX();
-    trans.position.y = joltPos.GetY();
-    trans.position.z = joltPos.GetZ();
+    trans->position.x = joltPos.GetX();
+    trans->position.y = joltPos.GetY();
+    trans->position.z = joltPos.GetZ();
 
-    trans.rotation.quaternion.x = joltRot.GetX();
-    trans.rotation.quaternion.y = joltRot.GetY();
-    trans.rotation.quaternion.z = joltRot.GetZ();
-    trans.rotation.quaternion.w = joltRot.GetW();
-
-    return trans;
+    trans->rotation.quaternion.x = joltRot.GetX();
+    trans->rotation.quaternion.y = joltRot.GetY();
+    trans->rotation.quaternion.z = joltRot.GetZ();
+    trans->rotation.quaternion.w = joltRot.GetW();
 }
 
-void Physics::SetBodyTransform(JPH::BodyID id, STransform trans)
+void Physics::SetBodyTransform(JPH::BodyID id, std::shared_ptr<STransform> trans)
 {
-    JPH::RVec3 joltPos = {trans.position.x, trans.position.y, trans.position.z};
+    JPH::RVec3 joltPos = {trans->position.x, trans->position.y, trans->position.z};
     JPH::Quat  joltRot = {
-        trans.rotation.quaternion.x,
-        trans.rotation.quaternion.y,
-        trans.rotation.quaternion.w,
-        trans.rotation.quaternion.z
+        trans->rotation.quaternion.x,
+        trans->rotation.quaternion.y,
+        trans->rotation.quaternion.w,
+        trans->rotation.quaternion.z
     };
 
     m_physicsSystem.GetBodyInterface()
         .SetPositionAndRotation(id, joltPos, joltRot, JPH::EActivation::Activate);
+}
+
+void Physics::SetBodyPosition(JPH::BodyID id, glm::vec3 pos)
+{
+    JPH::RVec3 joltPos = {pos.x, pos.y, pos.z};
+    m_physicsSystem.GetBodyInterface().SetPosition(id, joltPos, JPH::EActivation::Activate);
+}
+
+void Physics::SetBodyRotation(JPH::BodyID id, glm::quat rot)
+{
+    JPH::Quat joltRot = {rot.x, rot.y, rot.w, rot.z};
+    m_physicsSystem.GetBodyInterface().SetRotation(id, joltRot, JPH::EActivation::Activate);
+}
+
+void Physics::SetBodyVelocity(JPH::BodyID id, glm::vec3 vel)
+{
+    JPH::RVec3 joltVel = {vel.x, vel.y, vel.z};
+    m_physicsSystem.GetBodyInterface().SetPosition(id, joltVel, JPH::EActivation::Activate);
+}
+
+void Physics::SetBodyAngularVelocity(JPH::BodyID id, glm::vec3 vel)
+{
+    JPH::RVec3 joltVel = {vel.x, vel.y, vel.z};
+    m_physicsSystem.GetBodyInterface().SetPosition(id, joltVel, JPH::EActivation::Activate);
 }
 }; // namespace legs
