@@ -2,7 +2,6 @@ project(
   'legs',
   'cpp',
   default_options: [
-    'default_library=static',
     'cpp_std=c++23',
     'b_ndebug=if-release',
     'warning_level=3',

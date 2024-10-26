@@ -37,7 +37,7 @@ legs_public_includes = include_directories([
   'public/'
 ])
 
-legs_lib = shared_library(
+legs_lib = library(
   'legs',
   legs_src + imgui_src,
   glsl_generator.process(legs_shaders),
