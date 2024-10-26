@@ -29,7 +29,12 @@ class IPhysics
     virtual void        RemoveBody(JPH::BodyID id)                     = 0;
     virtual void        DestroyBody(JPH::BodyID id)                    = 0;
 
-    virtual STransform GetBodyTransform(JPH::BodyID id)                   = 0;
-    virtual void       SetBodyTransform(JPH::BodyID id, STransform trans) = 0;
+    virtual void GetBodyTransform(JPH::BodyID id, std::shared_ptr<STransform> trans) = 0;
+    virtual void SetBodyTransform(JPH::BodyID id, std::shared_ptr<STransform> trans) = 0;
+
+    virtual void SetBodyPosition(JPH::BodyID id, glm::vec3 pos)        = 0;
+    virtual void SetBodyRotation(JPH::BodyID id, glm::quat rot)        = 0;
+    virtual void SetBodyVelocity(JPH::BodyID id, glm::vec3 vel)        = 0;
+    virtual void SetBodyAngularVelocity(JPH::BodyID id, glm::vec3 vel) = 0;
 };
 }; // namespace legs

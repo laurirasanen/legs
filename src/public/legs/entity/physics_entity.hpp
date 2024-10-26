@@ -1,7 +1,6 @@
 #pragma once
 
 #include <memory>
-#include <string>
 
 #include <legs/iphysics.hpp>
 
@@ -46,9 +45,31 @@ class PhysicsEntity : public MeshEntity
     virtual void OnTick() override
     {
         MeshEntity::OnTick();
-        auto trans          = g_engine->GetWorld()->GetPhysics()->GetBodyTransform(m_joltBody);
-        Transform->position = trans.position;
-        Transform->rotation = trans.rotation;
+        g_engine->GetWorld()->GetPhysics()->GetBodyTransform(m_joltBody, Transform);
+    }
+
+    virtual void SetPosition(glm::vec3 pos) override
+    {
+        MeshEntity::SetPosition(pos);
+        g_engine->GetWorld()->GetPhysics()->SetBodyPosition(m_joltBody, pos);
+    }
+
+    virtual void SetRotation(glm::quat rot) override
+    {
+        MeshEntity::SetRotation(rot);
+        g_engine->GetWorld()->GetPhysics()->SetBodyRotation(m_joltBody, rot);
+    }
+
+    virtual void SetVelocity(glm::vec3 vel) override
+    {
+        MeshEntity::SetVelocity(vel);
+        g_engine->GetWorld()->GetPhysics()->SetBodyVelocity(m_joltBody, vel);
+    }
+
+    virtual void SetAngularVelocity(glm::vec3 vel) override
+    {
+        MeshEntity::SetAngularVelocity(vel);
+        g_engine->GetWorld()->GetPhysics()->SetBodyAngularVelocity(m_joltBody, vel);
     }
 
   protected:

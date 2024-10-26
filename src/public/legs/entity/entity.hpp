@@ -23,6 +23,47 @@ class Entity
     virtual void OnFrame() {};
     virtual void OnTick() {};
 
+    virtual void SetPosition(glm::vec3 pos)
+    {
+        Transform->position = pos;
+    }
+
+    virtual void SetRotation(glm::quat rot)
+    {
+        Transform->rotation.quaternion = rot;
+    }
+
+    virtual void SetVelocity(glm::vec3 vel)
+    {
+        Transform->velocity = vel;
+    }
+
+    virtual void SetAngularVelocity(glm::vec3 vel)
+    {
+        Transform->angularVelocity = vel;
+    }
+
+    virtual glm::vec3 GetPosition()
+    {
+        return Transform->position;
+    }
+
+    virtual glm::quat GetRotation()
+    {
+        return Transform->rotation.quaternion;
+    }
+
+    virtual glm::vec3 GetVelocity()
+    {
+        return Transform->velocity;
+    }
+
+    virtual glm::vec3 GetAngularVelocity()
+    {
+        return Transform->angularVelocity;
+    }
+
+  protected:
     std::string                 Name;
     std::shared_ptr<STransform> Transform;
 };
