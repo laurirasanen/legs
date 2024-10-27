@@ -4,10 +4,7 @@
 
 #pragma once
 
-#include <Jolt/Jolt.h>
-
-#include <Jolt/Core/JobSystem.h>
-#include <Jolt/Core/Semaphore.h>
+#include <legs/jolt_pch.hpp>
 
 namespace legs
 {

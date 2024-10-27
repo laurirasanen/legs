@@ -42,6 +42,7 @@ compiler_args = [
   '-DPOSIX',
 
   '-DJPH_OBJECT_STREAM',
+  '-DCPP_RTTI_ENABLED',
 ]
 
 linker_args = [
@@ -50,12 +51,11 @@ linker_args = [
 
 if buildtype == 'debug'
   compiler_args += [
-   '-DJPH_SHARED_LIBRARY',
-   '-DJPH_PROFILE_ENABLED',
-   '-DJPH_DEBUG_RENDERER',
+    '-DJPH_SHARED_LIBRARY',
+    '-DJPH_PROFILE_ENABLED',
+    '-DJPH_DEBUG_RENDERER',
   ]
 endif
-
 
 add_project_arguments(cpp.get_supported_arguments(compiler_args), language: 'cpp')
 add_project_link_arguments(cpp.get_supported_link_arguments(linker_args), language: 'cpp')

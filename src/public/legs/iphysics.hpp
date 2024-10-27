@@ -2,9 +2,7 @@
 
 #include <memory>
 
-#include <Jolt/Jolt.h>
-#include <Jolt/Physics/Body/Body.h>
-#include <Jolt/Physics/Body/BodyCreationSettings.h>
+#include <legs/jolt_pch.hpp>
 
 #include <legs/components/transform.hpp>
 

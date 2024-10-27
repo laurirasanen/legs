@@ -14,7 +14,8 @@ rm -rf Linux_Release
 rm -rf Linux_Distribution
 
 ./cmake_linux_clang_gcc.sh "$mode" clang++ \
-    -DBUILD_SHARED_LIBS=ON
+    -DBUILD_SHARED_LIBS=ON \
+    -DCPP_RTTI_ENABLED=ON
 
 cd "Linux_$mode"
 

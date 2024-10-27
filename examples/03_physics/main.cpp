@@ -2,8 +2,7 @@
 
 #include <legs/entry.hpp>
 
-#include <legs/entity/mesh_entity.hpp>
-#include <legs/entity/sky.hpp>
+#include <legs/entity/physics_entity.hpp>
 #include <legs/geometry/icosphere.hpp>
 #include <legs/geometry/plane.hpp>
 #include <legs/isystem.hpp>
@@ -27,7 +26,7 @@ class MySystem : public ISystem
         auto renderer = g_engine->GetRenderer();
         auto world    = g_engine->GetWorld();
 
-        // Create a test plane
+        // Create a plane
         std::shared_ptr<Buffer> planeVertexBuffer;
         std::shared_ptr<Buffer> planeIndexBuffer;
 
@@ -57,10 +56,57 @@ class MySystem : public ISystem
             static_cast<uint32_t>(testPlane.indices.size())
         );
 
-        auto plane = std::make_shared<MeshEntity>();
+        auto plane = std::make_shared<PhysicsEntity>();
         plane->SetBuffers(planeVertexBuffer, planeIndexBuffer);
         plane->SetPipeline(RenderPipeline::GEO_P_C);
+
+        auto planeCollider = BoxCollider(
+            JPH::EMotionType::Static,
+            Layers::NON_MOVING,
+            plane->GetTransform(),
+            {20.0f, 20.0f, 0.1f}
+        );
+        plane->SetCollider(planeCollider);
+
         world->AddEntity(plane);
+
+        // Create a sphere
+        auto                    testSphere = SIcosphere(glm::vec3(0.0f, 0.0f, 10.0f), 0.5f, 1);
+        std::shared_ptr<Buffer> sphereVertexBuffer;
+        std::shared_ptr<Buffer> sphereIndexBuffer;
+
+        std::vector<Vertex_P_N_C> sphereVertices;
+        sphereVertices.reserve(testSphere.positions.size());
+        for (unsigned int i = 0; i < testSphere.positions.size(); i++)
+        {
+            sphereVertices.push_back(
+                {testSphere.positions[i], testSphere.normals[i], glm::vec3(0.5, 0.5, 0.5)}
+            );
+        }
+        renderer->CreateBuffer(
+            sphereVertexBuffer,
+            VertexBuffer,
+            sphereVertices.data(),
+            sizeof(Vertex_P_N_C),
+            static_cast<uint32_t>(sphereVertices.size())
+        );
+        renderer->CreateBuffer(
+            sphereIndexBuffer,
+            IndexBuffer,
+            testSphere.indices.data(),
+            sizeof(Index),
+            static_cast<uint32_t>(testSphere.indices.size())
+        );
+
+        auto sphere = std::make_shared<PhysicsEntity>();
+        sphere->SetBuffers(sphereVertexBuffer, sphereIndexBuffer);
+        sphere->SetPipeline(RenderPipeline::GEO_P_N_C);
+
+        auto sphereCollider =
+            SphereCollider(JPH::EMotionType::Dynamic, Layers::MOVING, sphere->GetTransform(), 0.5f);
+        sphere->SetCollider(sphereCollider);
+
+        world->AddEntity(sphere);
     }
 
     ~MySystem()
@@ -70,10 +116,6 @@ class MySystem : public ISystem
     void OnFrame() override
     {
         m_camera->HandleInput(g_engine->GetFrameInput());
-    }
-
-    void OnTick() override
-    {
     }
 
   private:

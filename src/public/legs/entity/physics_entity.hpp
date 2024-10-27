@@ -2,6 +2,7 @@
 
 #include <memory>
 
+#include <legs/collider.hpp>
 #include <legs/iphysics.hpp>
 
 #include <legs/entity/mesh_entity.hpp>
@@ -26,7 +27,7 @@ class PhysicsEntity : public MeshEntity
     virtual void OnSpawn() override
     {
         MeshEntity::OnSpawn();
-        m_joltBody = g_engine->GetWorld()->GetPhysics()->CreateBody({});
+        m_joltBody = g_engine->GetWorld()->GetPhysics()->CreateBody(m_collider.CreationSettings);
         g_engine->GetWorld()->GetPhysics()->AddBody(m_joltBody);
     }
 
@@ -72,7 +73,13 @@ class PhysicsEntity : public MeshEntity
         g_engine->GetWorld()->GetPhysics()->SetBodyAngularVelocity(m_joltBody, vel);
     }
 
+    virtual void SetCollider(ICollider collider)
+    {
+        m_collider = collider;
+    }
+
   protected:
     JPH::BodyID m_joltBody;
+    ICollider   m_collider;
 };
 }; // namespace legs

@@ -6,10 +6,7 @@
 
 #include <thread>
 
-#include <Jolt/Jolt.h>
-
-#include <Jolt/Core/FixedSizeFreeList.h>
-#include <Jolt/Core/Semaphore.h>
+#include <legs/jolt_pch.hpp>
 
 #include "job_system_with_barrier.hpp"
 

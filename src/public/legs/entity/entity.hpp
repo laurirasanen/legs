@@ -43,6 +43,11 @@ class Entity
         Transform->angularVelocity = vel;
     }
 
+    virtual std::shared_ptr<STransform> GetTransform()
+    {
+        return Transform;
+    }
+
     virtual glm::vec3 GetPosition()
     {
         return Transform->position;
