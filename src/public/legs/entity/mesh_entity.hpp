@@ -59,6 +59,7 @@ class MeshEntity : public Entity
             return;
         }
 
+        // TODO: Transform matrices
         renderer->BindPipeline(m_pipeline);
         renderer->DrawWithBuffers(m_vertexBuffer, m_indexBuffer);
     }

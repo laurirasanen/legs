@@ -2,10 +2,10 @@
 
 set -euo pipefail
 
+# TODO: gcc busted
 export CXX=clang++
 
 # TODO: ubsan doesn't link with jolt
-# TODO: gcc busted
 meson setup --reconfigure \
     -D examples=true \
     -D buildtype=debug \
